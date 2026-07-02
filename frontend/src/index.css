@@ -1341,7 +1341,7 @@ select.form-control { cursor: pointer; }
 }
 
 @media (max-width: 768px) {
-  .container { padding: 0 var(--space-md); }
+  .container { padding: 0 var(--space-lg); }
 
   .navbar-links {
     display: none;
@@ -1377,6 +1377,10 @@ select.form-control { cursor: pointer; }
   .hero-actions { flex-direction: column; align-items: stretch; width: 100%; max-width: 320px; }
   .hero-actions .btn { width: 100%; justify-content: center; }
   .hero-socials { justify-content: center; }
+  
+  /* Fix overflowing stat cards */
+  .stats-row { grid-template-columns: 1fr 1fr; gap: var(--space-md); }
+  .stat-card { padding: var(--space-lg) var(--space-sm); }
 }
 
 @media (max-width: 480px) {
