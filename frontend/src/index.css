@@ -1341,7 +1341,7 @@ select.form-control { cursor: pointer; }
 }
 
 @media (max-width: 768px) {
-  .container { padding: 0 var(--space-lg); }
+  .container, .navbar-inner { padding: 0 var(--space-lg); }
 
   .navbar-links {
     display: none;
