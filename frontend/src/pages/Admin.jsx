@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
 import ProjectCard from '../components/ProjectCard';
 import {
-  getProjects, createProject, updateProject, deleteProject, seedProjects,
+  getProjects, createProject, updateProject, deleteProject, seedProjects, uploadImage,
   getMessages, markMessageRead, deleteMessage,
 } from '../api/api';
 
@@ -29,6 +29,7 @@ export default function Admin() {
   const [editingId, setEditingId] = useState(null);
   const [showForm, setShowForm] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [uploadingImage, setUploadingImage] = useState(false);
 
   // ── Fetch data ──────────────────────────────────────────────────────────
   const fetchProjects = async () => {
@@ -84,6 +85,33 @@ export default function Admin() {
   };
 
   // ── CRUD operations ───────────────────────────────────────────────────────
+  const handleImageUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    if (!file.type.startsWith('image/')) {
+      toast.error('Please upload an image file.');
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('image', file);
+
+    setUploadingImage(true);
+    const loadingToast = toast.loading('Uploading image...');
+    
+    try {
+      const res = await uploadImage(formData);
+      setForm((prev) => ({ ...prev, imageUrl: res.data.url }));
+      toast.success('Image uploaded successfully', { id: loadingToast });
+    } catch (err) {
+      toast.error('Image upload failed', { id: loadingToast });
+      console.error(err);
+    } finally {
+      setUploadingImage(false);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmitting(true);
@@ -232,9 +260,41 @@ export default function Admin() {
                       </div>
                     </div>
                     <div className="form-row">
-                      <div className="form-group">
-                        <label>Image URL</label>
-                        <input className="form-control" name="imageUrl" value={form.imageUrl} onChange={handleChange} placeholder="https://..." />
+                      <div className="form-group" style={{ position: 'relative' }}>
+                        <label>Image Screenshot</label>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginTop: '0.25rem' }}>
+                          <label 
+                            htmlFor="image-upload-input" 
+                            className="btn btn-outline btn-sm" 
+                            style={{ margin: 0, cursor: uploadingImage ? 'not-allowed' : 'pointer', opacity: uploadingImage ? 0.7 : 1 }}
+                          >
+                            {uploadingImage ? '⏳ Uploading...' : '📁 Select Image'}
+                          </label>
+                          <input 
+                            type="file" 
+                            accept="image/*" 
+                            onChange={handleImageUpload} 
+                            disabled={uploadingImage}
+                            id="image-upload-input"
+                            style={{ display: 'none' }}
+                          />
+                        </div>
+                        {form.imageUrl && (
+                          <div style={{ marginTop: '0.75rem', position: 'relative', width: 'fit-content' }}>
+                            <img 
+                              src={form.imageUrl.startsWith('http') ? form.imageUrl : `http://localhost:5000${form.imageUrl}`} 
+                              alt="Preview" 
+                              style={{ width: '120px', height: '80px', objectFit: 'cover', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)' }} 
+                            />
+                            <button 
+                              type="button" 
+                              onClick={() => setForm(prev => ({ ...prev, imageUrl: '' }))}
+                              style={{ position: 'absolute', top: -8, right: -8, background: 'var(--error)', color: 'white', border: 'none', borderRadius: '50%', width: 24, height: 24, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 14 }}
+                            >
+                              ✕
+                            </button>
+                          </div>
+                        )}
                       </div>
                       <div className="form-group">
                         <label>Display Order</label>

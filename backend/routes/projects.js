@@ -72,6 +72,17 @@ router.post('/seed/data', async (req, res) => {
     await Project.deleteMany({});
     const sampleProjects = [
       {
+        title: 'HomeSweet',
+        description: 'A full-stack student housing platform helping university students find safe and affordable accommodation near campus. Features identity verification, interactive map search, role-based dashboards, and real-time messaging.',
+        technologies: ['React', 'Firebase', 'Tailwind CSS', 'Google Maps API', 'Vercel'],
+        imageUrl: 'https://image.thum.io/get/width/600/crop/800/https://internship-project-two-blush.vercel.app',
+        githubUrl: 'https://github.com/ThyrexGG/Internship-Project',
+        liveUrl: 'https://internship-project-two-blush.vercel.app',
+        category: 'Web',
+        featured: true,
+        order: 1,
+      },
+      {
         title: 'Personal Portfolio Website',
         description: 'A full-stack portfolio website (this one!) built with React, Node.js, Express, and MongoDB. Features CRUD project management, contact form, dark/light mode, command palette, and interactive terminal.',
         technologies: ['React', 'Node.js', 'Express', 'MongoDB', 'AWS', 'Vite'],
@@ -80,7 +91,7 @@ router.post('/seed/data', async (req, res) => {
         liveUrl: 'https://ngornvimean.dev',
         category: 'Web',
         featured: true,
-        order: 1,
+        order: 2,
       },
       {
         title: 'Internship Project — Firebase App',

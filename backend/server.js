@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const path = require('path');
 require('dotenv').config();
 
 const app = express();
@@ -15,9 +16,14 @@ app.use(express.json());
 // Routes
 const projectRoutes = require('./routes/projects');
 const messageRoutes = require('./routes/messages');
+const uploadRoutes = require('./routes/upload');
 
 app.use('/api/projects', projectRoutes);
 app.use('/api/messages', messageRoutes);
+app.use('/api/upload', uploadRoutes);
+
+// Static folders
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Health check
 app.get('/api/health', (req, res) => {

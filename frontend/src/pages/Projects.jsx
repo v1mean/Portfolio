@@ -1,13 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import ProjectCard from '../components/ProjectCard';
+import ScrollReveal from '../components/ScrollReveal';
 import { getProjects } from '../api/api';
 
 const CATEGORIES = ['All', 'Web', 'Mobile', 'Backend', 'AI/ML', 'Other'];
-
-const ALL_TECH_TAGS = [
-  'React', 'Node.js', 'MongoDB', 'Python', 'JavaScript', 'Firebase',
-  'Express', 'TensorFlow', 'MySQL', 'Redis', 'AWS', 'Tailwind CSS',
-];
 
 export default function Projects() {
   const [projects, setProjects] = useState([]);
@@ -27,7 +23,6 @@ export default function Projects() {
     fetchProjects();
   }, []);
 
-  // All tech tags that appear in loaded projects
   const dynamicTags = [
     'All',
     ...new Set(projects.flatMap((p) => p.technologies).slice(0, 15)),
@@ -47,65 +42,73 @@ export default function Projects() {
   return (
     <>
       {/* Page Header */}
-      <div className="page-header">
-        <div className="container">
-          <div className="section-tag">Portfolio</div>
-          <h1 className="section-title">All <span>Projects</span></h1>
-          <p className="section-subtitle">
-            From academic coursework to personal initiatives — every project I've built.
-          </p>
+      <ScrollReveal variant="up">
+        <div className="page-header">
+          <div className="container">
+            <div className="section-tag">Portfolio</div>
+            <h1 className="section-title">All <span>Projects</span></h1>
+            <p className="section-subtitle">
+              From academic coursework to personal initiatives — every project I've built.
+            </p>
+          </div>
         </div>
-      </div>
+      </ScrollReveal>
 
       <div className="container" style={{ paddingTop: '2rem', paddingBottom: '4rem' }}>
         {/* Search bar */}
-        <div className="search-bar-wrapper">
-          <svg className="search-bar-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
-          </svg>
-          <input
-            className="search-bar"
-            type="text"
-            placeholder="Search projects by name, description, or tech..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            id="projects-search-input"
-          />
-        </div>
+        <ScrollReveal variant="up" delay={80}>
+          <div className="search-bar-wrapper">
+            <svg className="search-bar-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+            </svg>
+            <input
+              className="search-bar"
+              type="text"
+              placeholder="Search projects by name, description, or tech..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              id="projects-search-input"
+            />
+          </div>
+        </ScrollReveal>
 
         {/* Category filter */}
-        <div className="filter-tabs">
-          {CATEGORIES.map((cat) => (
-            <button
-              key={cat}
-              className={`filter-tab ${activeCategory === cat ? 'active' : ''}`}
-              onClick={() => setActiveCategory(cat)}
-              id={`category-filter-${cat.toLowerCase().replace('/', '-')}`}
-            >
-              {cat}
-            </button>
-          ))}
-        </div>
+        <ScrollReveal variant="fade" delay={120}>
+          <div className="filter-tabs">
+            {CATEGORIES.map((cat) => (
+              <button
+                key={cat}
+                className={`filter-tab ${activeCategory === cat ? 'active' : ''}`}
+                onClick={() => setActiveCategory(cat)}
+                id={`category-filter-${cat.toLowerCase().replace('/', '-')}`}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
+        </ScrollReveal>
 
         {/* Technology filter */}
         {projects.length > 0 && (
-          <div style={{ marginBottom: '2rem' }}>
-            <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)', marginBottom: '0.5rem', textAlign: 'center', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: 600 }}>
-              Filter by Technology
+          <ScrollReveal variant="fade" delay={160}>
+            <div style={{ marginBottom: '2rem' }}>
+              <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)', marginBottom: '0.5rem', textAlign: 'center', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: 600 }}>
+                Filter by Technology
+              </div>
+              <div className="filter-tabs">
+                {dynamicTags.map((tag) => (
+                  <button
+                    key={tag}
+                    className={`filter-tab ${activeTech === tag ? 'active' : ''}`}
+                    onClick={() => setActiveTech(tag)}
+                    id={`tech-filter-${tag.toLowerCase().replace(/[^a-z0-9]/g, '-')}`}
+                  >
+                    {tag}
+                  </button>
+                ))}
+              </div>
             </div>
-            <div className="filter-tabs">
-              {dynamicTags.map((tag) => (
-                <button
-                  key={tag}
-                  className={`filter-tab ${activeTech === tag ? 'active' : ''}`}
-                  onClick={() => setActiveTech(tag)}
-                  id={`tech-filter-${tag.toLowerCase().replace(/[^a-z0-9]/g, '-')}`}
-                >
-                  {tag}
-                </button>
-              ))}
-            </div>
-          </div>
+          </ScrollReveal>
         )}
 
         {/* Results count */}
@@ -117,13 +120,15 @@ export default function Projects() {
           </div>
         )}
 
-        {/* Project grid */}
+        {/* Project grid — staggered cards */}
         {loading ? (
           <div className="loading-spinner"><div className="spinner" /><p>Loading projects...</p></div>
         ) : filtered.length > 0 ? (
           <div className="projects-grid">
-            {filtered.map((p) => (
-              <ProjectCard key={p._id} project={p} />
+            {filtered.map((p, i) => (
+              <ScrollReveal key={p._id} variant="up" delay={i * 100}>
+                <ProjectCard project={p} />
+              </ScrollReveal>
             ))}
           </div>
         ) : (
