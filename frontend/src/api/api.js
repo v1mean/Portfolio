@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const API = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:5000/api',
+  baseURL: import.meta.env.PROD ? '/api' : (import.meta.env.VITE_API_URL || 'http://localhost:5000/api'),
 });
 
 const fallbackProjects = [
@@ -30,17 +30,14 @@ const fallbackProjects = [
     description: "A highly interactive, performance-optimized personal developer portfolio featuring dynamic 3D loading animations, a sleek macOS window mockup for showcasing projects, and seamless transitions.",
     technologies: ["React", "Vite", "Tailwind CSS", "Framer Motion", "Node.js"],
     imageUrl: "/portfolio/1.png",
-    githubUrl: "https://github.com/ThyrexGG/portfolio",
-    liveUrl: "https://vimean.dev",
+    githubUrl: "https://github.com/v1mean/Portfolio.git",
+    liveUrl: "",
     category: "Web",
     featured: true,
     order: 2,
     screenshots: [
       "/portfolio/1.png",
-      "/portfolio/2.png",
-      "/portfolio/3.png",
-      "/portfolio/4.png",
-      "/portfolio/5.png"
+      "/portfolio/2.png"
     ]
   }
 ];

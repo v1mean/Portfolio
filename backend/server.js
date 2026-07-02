@@ -7,8 +7,9 @@ require('dotenv').config();
 const app = express();
 
 // Middleware
+// Allow all origins in production, or specific frontend IP if needed
 app.use(cors({
-  origin: ['http://localhost:5173', 'http://localhost:3000'],
+  origin: '*',
   credentials: true,
 }));
 app.use(express.json());
@@ -29,6 +30,15 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', message: 'Portfolio API is running' });
 });
+
+// Serve frontend in production
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '../frontend/dist')));
+  
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../frontend/dist', 'index.html'));
+  });
+}
 
 // MongoDB Connection
 mongoose.connect(process.env.MONGO_URI)

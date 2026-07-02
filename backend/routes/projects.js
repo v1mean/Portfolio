@@ -78,6 +78,13 @@ router.post('/seed/data', async (req, res) => {
         imageUrl: 'https://image.thum.io/get/width/600/crop/800/https://internship-project-two-blush.vercel.app',
         githubUrl: 'https://github.com/ThyrexGG/Internship-Project',
         liveUrl: 'https://internship-project-two-blush.vercel.app',
+        screenshots: [
+          '/homesweet/1.png',
+          '/homesweet/2.png',
+          '/homesweet/3.png',
+          '/homesweet/4.png',
+          '/homesweet/5.png'
+        ],
         category: 'Web',
         featured: true,
         order: 1,
@@ -87,8 +94,12 @@ router.post('/seed/data', async (req, res) => {
         description: 'A full-stack portfolio website (this one!) built with React, Node.js, Express, and MongoDB. Features CRUD project management, contact form, dark/light mode, command palette, and interactive terminal.',
         technologies: ['React', 'Node.js', 'Express', 'MongoDB', 'AWS', 'Vite'],
         imageUrl: '',
-        githubUrl: 'https://github.com/v1mean/portfolio',
-        liveUrl: 'https://ngornvimean.dev',
+        githubUrl: 'https://github.com/v1mean/Portfolio.git',
+        liveUrl: '',
+        screenshots: [
+          '/portfolio/1.png',
+          '/portfolio/2.png'
+        ],
         category: 'Web',
         featured: true,
         order: 2,

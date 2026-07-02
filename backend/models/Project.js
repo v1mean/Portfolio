@@ -18,6 +18,10 @@ const projectSchema = new mongoose.Schema({
     type: String,
     default: '',
   },
+  screenshots: {
+    type: [String],
+    default: [],
+  },
   githubUrl: {
     type: String,
     default: '',
