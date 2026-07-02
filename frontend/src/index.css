@@ -1337,6 +1337,7 @@ select.form-control { cursor: pointer; }
   .about-grid { grid-template-columns: 1fr; }
   .about-avatar-wrapper { position: static; }
   .experience-split { grid-template-columns: 1fr; }
+  .admin-tabs { flex-wrap: wrap; }
 }
 
 @media (max-width: 768px) {
@@ -1359,22 +1360,44 @@ select.form-control { cursor: pointer; }
 
   .projects-grid { grid-template-columns: 1fr; }
   .form-row { grid-template-columns: 1fr; }
-  .hero-actions { flex-direction: column; align-items: flex-start; }
   .services-grid { grid-template-columns: 1fr; }
   .blog-grid { grid-template-columns: 1fr; }
   .admin-table { display: block; overflow-x: auto; }
-  .footer-inner { flex-direction: column; text-align: center; }
+  
+  .footer-inner { flex-direction: column; text-align: center; gap: var(--space-lg); }
+  .footer-links { flex-wrap: wrap; justify-content: center; }
+
   .terminal-overlay { padding: 0; }
-  .terminal { max-height: 60vh; border-radius: var(--radius-lg) var(--radius-lg) 0 0; }
+  .terminal { max-height: 70vh; border-radius: var(--radius-lg) var(--radius-lg) 0 0; }
+  
   .resume-banner { flex-direction: column; text-align: center; }
+
+  /* Better Mobile Hero alignment */
+  .hero-content { text-align: center; display: flex; flex-direction: column; align-items: center; }
+  .hero-actions { flex-direction: column; align-items: stretch; width: 100%; max-width: 320px; }
+  .hero-actions .btn { width: 100%; justify-content: center; }
+  .hero-socials { justify-content: center; }
 }
 
 @media (max-width: 480px) {
-  .stats-row { grid-template-columns: 1fr 1fr; }
+  .stats-row { grid-template-columns: 1fr 1fr; gap: var(--space-md); }
+  .stat-card { padding: var(--space-md); }
+  
   .skills-grid { grid-template-columns: 1fr; }
+  
   .section { padding: var(--space-2xl) 0; }
+  .section-header { margin-bottom: var(--space-xl); }
+  
   .hero-socials { gap: var(--space-sm); }
+  
   .command-palette { margin: 0 var(--space-md); }
+  .contact-form { padding: var(--space-lg); }
+  
+  .timeline-card { padding: var(--space-md); }
+  
+  /* Make typography slightly smaller on very small screens */
+  html { font-size: 15px; }
+  .hero-name { font-size: clamp(2.2rem, 8vw, 3rem); }
 }
 
 /* ============================================================
