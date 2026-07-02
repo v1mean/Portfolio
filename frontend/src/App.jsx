@@ -1,41 +1,101 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import { Toaster } from 'react-hot-toast';
+import { ThemeProvider } from './context/ThemeContext';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import CommandPalette from './components/CommandPalette';
+import Terminal from './components/Terminal';
 import Home from './pages/Home';
+import About from './pages/About';
 import Projects from './pages/Projects';
+import Experience from './pages/Experience';
+import Blog from './pages/Blog';
 import Admin from './pages/Admin';
+import NotFound from './pages/NotFound';
 import './index.css';
+
+function AppContent() {
+  const [paletteOpen, setPaletteOpen] = useState(false);
+  const [terminalOpen, setTerminalOpen] = useState(false);
+
+  // Global keyboard shortcuts
+  useEffect(() => {
+    const handler = (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+        e.preventDefault();
+        setPaletteOpen((o) => !o);
+      }
+      if ((e.ctrlKey || e.metaKey) && e.key === '`') {
+        e.preventDefault();
+        setTerminalOpen((o) => !o);
+      }
+    };
+    window.addEventListener('keydown', handler);
+    return () => window.removeEventListener('keydown', handler);
+  }, []);
+
+  return (
+    <div className="app">
+      <Navbar
+        onOpenPalette={() => setPaletteOpen(true)}
+        onOpenTerminal={() => setTerminalOpen(true)}
+      />
+
+      <main className="main-content">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/projects" element={<Projects />} />
+          <Route path="/experience" element={<Experience />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/admin" element={<Admin />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </main>
+
+      <Footer />
+
+      {/* Terminal Trigger FAB */}
+      <button
+        className="terminal-trigger"
+        onClick={() => setTerminalOpen(true)}
+        title="Open Terminal (Ctrl+`)"
+        id="terminal-fab-btn"
+      >
+        <span className="terminal-trigger-dot" />
+        <span style={{ fontFamily: 'var(--font-mono)' }}>~$ terminal</span>
+      </button>
+
+      {/* Overlays */}
+      <CommandPalette open={paletteOpen} onClose={() => setPaletteOpen(false)} />
+      <Terminal open={terminalOpen} onClose={() => setTerminalOpen(false)} />
+
+      <Toaster
+        position="bottom-left"
+        toastOptions={{
+          duration: 3000,
+          style: {
+            background: 'var(--bg-card)',
+            color: 'var(--text-primary)',
+            border: '1px solid var(--border)',
+            borderRadius: '12px',
+          },
+          success: { iconTheme: { primary: '#10b981', secondary: 'var(--bg-card)' } },
+          error: { iconTheme: { primary: '#ef4444', secondary: 'var(--bg-card)' } },
+        }}
+      />
+    </div>
+  );
+}
 
 function App() {
   return (
-    <Router>
-      <div className="app">
-        <Navbar />
-        <main className="main-content">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/projects" element={<Projects />} />
-            <Route path="/admin" element={<Admin />} />
-          </Routes>
-        </main>
-        <Footer />
-        <Toaster
-          position="bottom-right"
-          toastOptions={{
-            duration: 3000,
-            style: {
-              background: '#1e1e2e',
-              color: '#cdd6f4',
-              border: '1px solid #313244',
-              borderRadius: '12px',
-            },
-            success: { iconTheme: { primary: '#a6e3a1', secondary: '#1e1e2e' } },
-            error: { iconTheme: { primary: '#f38ba8', secondary: '#1e1e2e' } },
-          }}
-        />
-      </div>
-    </Router>
+    <ThemeProvider>
+      <Router>
+        <AppContent />
+      </Router>
+    </ThemeProvider>
   );
 }
 
