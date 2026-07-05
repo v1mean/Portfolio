@@ -326,7 +326,7 @@ export default function Admin() {
                         {form.imageUrl && (
                           <div style={{ marginTop: '0.75rem', position: 'relative', width: 'fit-content' }}>
                             <img 
-                              src={form.imageUrl.startsWith('http') ? form.imageUrl : `http://localhost:5000${form.imageUrl}`} 
+                              src={form.imageUrl.startsWith('http') ? form.imageUrl : (import.meta.env.PROD ? form.imageUrl : `http://localhost:5000${form.imageUrl}`)} 
                               alt="Preview" 
                               style={{ width: '120px', height: '80px', objectFit: 'cover', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)' }} 
                             />

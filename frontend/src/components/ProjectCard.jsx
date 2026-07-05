@@ -77,31 +77,34 @@ export default function ProjectCard({ project, onEdit, onDelete, isAdmin = false
 
         <div className="project-card-image" style={{ position: 'relative', overflow: 'hidden' }}>
           {project.screenshots && project.screenshots.length > 0 ? (
-            project.screenshots.map((src, idx) => (
-              <img 
-                key={idx}
-                src={src.startsWith('http') ? src : `http://localhost:5000${src}`} 
-                alt={`${project.title} screenshot ${idx + 1}`} 
-                style={{ 
-                  position: 'absolute',
-                  inset: 0,
-                  width: '100%', 
-                  height: '100%', 
-                  objectFit: 'cover',
-                  opacity: currentImageIndex === idx ? 1 : 0,
-                  transition: 'opacity 1s ease-in-out',
-                  zIndex: currentImageIndex === idx ? 1 : 0
-                }}
-                onError={(e) => {
-                  if (e.target.src.includes(':5000')) {
-                    e.target.src = src;
-                  }
-                }}
-              />
-            ))
+            project.screenshots.map((src, idx) => {
+              const imgSrc = src.startsWith('http') ? src : (import.meta.env.PROD ? src : `http://localhost:5000${src}`);
+              return (
+                <img 
+                  key={idx}
+                  src={imgSrc} 
+                  alt={`${project.title} screenshot ${idx + 1}`} 
+                  style={{ 
+                    position: 'absolute',
+                    inset: 0,
+                    width: '100%', 
+                    height: '100%', 
+                    objectFit: 'cover',
+                    opacity: currentImageIndex === idx ? 1 : 0,
+                    transition: 'opacity 1s ease-in-out',
+                    zIndex: currentImageIndex === idx ? 1 : 0
+                  }}
+                  onError={(e) => {
+                    if (e.target.style.display !== 'none') {
+                      e.target.style.display = 'none'; // Hide broken images
+                    }
+                  }}
+                />
+              )
+            })
           ) : project.imageUrl ? (
             <img 
-              src={project.imageUrl.startsWith('http') ? project.imageUrl : `http://localhost:5000${project.imageUrl}`} 
+              src={project.imageUrl.startsWith('http') ? project.imageUrl : (import.meta.env.PROD ? project.imageUrl : `http://localhost:5000${project.imageUrl}`)} 
               alt={project.title} 
               style={{ width: '100%', height: '100%', objectFit: 'cover' }}
             />
