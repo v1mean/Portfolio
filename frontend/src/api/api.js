@@ -4,6 +4,15 @@ const API = axios.create({
   baseURL: import.meta.env.PROD ? '/api' : (import.meta.env.VITE_API_URL || 'http://localhost:5000/api'),
 });
 
+// Add interceptor to attach JWT token
+API.interceptors.request.use((req) => {
+  const token = localStorage.getItem('adminToken');
+  if (token) {
+    req.headers.Authorization = `Bearer ${token}`;
+  }
+  return req;
+});
+
 const fallbackProjects = [
   {
     _id: "homesweet-fallback-id",
@@ -69,6 +78,9 @@ export const updateProject = (id, data) => API.put(`/projects/${id}`, data);
 export const deleteProject = (id) => API.delete(`/projects/${id}`);
 export const seedProjects = () => API.post('/projects/seed/data');
 export const uploadImage = (formData) => API.post('/upload', formData, { headers: { 'Content-Type': 'multipart/form-data' } });
+
+export const loginAdmin = (password) => API.post('/auth/login', { password });
+export const verifyAdmin = () => API.get('/auth/verify');
 
 // Messages API
 export const sendMessage = (data) => API.post('/messages', data);

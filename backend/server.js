@@ -15,10 +15,12 @@ app.use(cors({
 app.use(express.json());
 
 // Routes
+const authRoutes = require('./routes/auth');
 const projectRoutes = require('./routes/projects');
 const messageRoutes = require('./routes/messages');
 const uploadRoutes = require('./routes/upload');
 
+app.use('/api/auth', authRoutes);
 app.use('/api/projects', projectRoutes);
 app.use('/api/messages', messageRoutes);
 app.use('/api/upload', uploadRoutes);

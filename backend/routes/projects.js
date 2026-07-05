@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Project = require('../models/Project');
+const auth = require('../middleware/auth');
 
 // GET all projects
 router.get('/', async (req, res) => {
@@ -26,7 +27,7 @@ router.get('/:id', async (req, res) => {
 });
 
 // POST create project
-router.post('/', async (req, res) => {
+router.post('/', auth, async (req, res) => {
   try {
     const project = new Project(req.body);
     const savedProject = await project.save();
@@ -37,7 +38,7 @@ router.post('/', async (req, res) => {
 });
 
 // PUT update project
-router.put('/:id', async (req, res) => {
+router.put('/:id', auth, async (req, res) => {
   try {
     const project = await Project.findByIdAndUpdate(
       req.params.id,
@@ -54,7 +55,7 @@ router.put('/:id', async (req, res) => {
 });
 
 // DELETE project
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', auth, async (req, res) => {
   try {
     const project = await Project.findByIdAndDelete(req.params.id);
     if (!project) {
@@ -67,7 +68,7 @@ router.delete('/:id', async (req, res) => {
 });
 
 // POST seed sample projects
-router.post('/seed/data', async (req, res) => {
+router.post('/seed/data', auth, async (req, res) => {
   try {
     await Project.deleteMany({});
     const sampleProjects = [

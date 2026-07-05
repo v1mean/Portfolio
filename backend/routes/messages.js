@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Message = require('../models/Message');
+const auth = require('../middleware/auth');
 
 const nodemailer = require('nodemailer');
 
@@ -52,7 +53,7 @@ router.post('/', async (req, res) => {
 });
 
 // GET all messages (admin)
-router.get('/', async (req, res) => {
+router.get('/', auth, async (req, res) => {
   try {
     const messages = await Message.find().sort({ createdAt: -1 });
     res.json({ success: true, data: messages });
@@ -62,7 +63,7 @@ router.get('/', async (req, res) => {
 });
 
 // PATCH mark message as read
-router.patch('/:id/read', async (req, res) => {
+router.patch('/:id/read', auth, async (req, res) => {
   try {
     const message = await Message.findByIdAndUpdate(
       req.params.id,
@@ -79,7 +80,7 @@ router.patch('/:id/read', async (req, res) => {
 });
 
 // DELETE message
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', auth, async (req, res) => {
   try {
     const message = await Message.findByIdAndDelete(req.params.id);
     if (!message) {

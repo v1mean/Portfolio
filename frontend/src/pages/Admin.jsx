@@ -3,8 +3,9 @@ import toast from 'react-hot-toast';
 import ProjectCard from '../components/ProjectCard';
 import {
   getProjects, createProject, updateProject, deleteProject, seedProjects, uploadImage,
-  getMessages, markMessageRead, deleteMessage,
+  getMessages, markMessageRead, deleteMessage, verifyAdmin
 } from '../api/api';
+import AdminLogin from '../components/AdminLogin';
 
 const EMPTY_FORM = {
   title: '',
@@ -21,6 +22,7 @@ const EMPTY_FORM = {
 const CATEGORIES = ['Web', 'Mobile', 'Backend', 'AI/ML', 'Other'];
 
 export default function Admin() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [activeTab, setActiveTab] = useState('projects');
   const [projects, setProjects] = useState([]);
   const [messages, setMessages] = useState([]);
@@ -53,9 +55,48 @@ export default function Admin() {
   };
 
   useEffect(() => {
-    fetchProjects();
-    fetchMessages();
+    const checkAuth = async () => {
+      const token = localStorage.getItem('adminToken');
+      if (token) {
+        try {
+          await verifyAdmin();
+          setIsAuthenticated(true);
+          fetchProjects();
+          fetchMessages();
+        } catch (error) {
+          localStorage.removeItem('adminToken');
+          setLoading(false);
+        }
+      } else {
+        setLoading(false);
+      }
+    };
+    checkAuth();
   }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem('adminToken');
+    setIsAuthenticated(false);
+  };
+
+  if (loading && !isAuthenticated) {
+    return <div className="admin-page"><div className="container"><div className="loading-spinner"><div className="spinner" /></div></div></div>;
+  }
+
+  if (!isAuthenticated) {
+    return (
+      <div className="admin-page">
+        <div className="container">
+          <AdminLogin onLogin={() => {
+            setIsAuthenticated(true);
+            setLoading(true);
+            fetchProjects();
+            fetchMessages();
+          }} />
+        </div>
+      </div>
+    );
+  }
 
   // ── Form helpers ─────────────────────────────────────────────────────────
   const handleChange = (e) => {
@@ -187,16 +228,19 @@ export default function Admin() {
         {/* Header */}
         <div className="admin-header">
           <h1 className="admin-title">⚙️ Admin Dashboard</h1>
-          {activeTab === 'projects' && (
-            <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
-              <button className="btn btn-outline btn-sm" onClick={handleSeed} id="seed-btn">
-                🌱 Seed Sample Data
-              </button>
-              <button className="btn btn-primary" onClick={openCreate} id="create-project-btn">
-                + Add Project
-              </button>
-            </div>
-          )}
+          <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
+            <button className="btn btn-outline btn-sm" onClick={handleLogout}>🚪 Logout</button>
+            {activeTab === 'projects' && (
+              <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
+                <button className="btn btn-outline btn-sm" onClick={handleSeed} id="seed-btn">
+                  🌱 Seed Sample Data
+                </button>
+                <button className="btn btn-primary" onClick={openCreate} id="create-project-btn">
+                  + Add Project
+                </button>
+              </div>
+            )}
+          </div>
         </div>
 
         {/* Tabs */}
