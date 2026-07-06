@@ -4,7 +4,7 @@ const TIMELINE = [
   {
     year: '2028',
     title: "Bachelor's Degree — Software Engineering",
-    org: 'Institute of Technology of Cambodia',
+    org: 'Cambodia University of Technology',
     type: 'education',
     icon: '🎓',
     desc: "Expected graduation with a Bachelor's in Software Engineering. Studying algorithms, data structures, system design, web development, databases, and software architecture.",
@@ -24,7 +24,7 @@ const TIMELINE = [
   {
     year: '2024',
     title: "Started Bachelor's Degree",
-    org: 'Institute of Technology of Cambodia',
+    org: 'Cambodia University of Technology',
     type: 'education',
     icon: '📚',
     desc: 'Enrolled in the Software Engineering program, beginning the journey into formal computer science education alongside continued self-study.',

@@ -47,7 +47,7 @@ const EDUCATION = [
   {
     date: '2024 – 2028',
     title: "Bachelor's Degree in Software Engineering",
-    institution: 'Institute of Technology of Cambodia',
+    institution: 'Cambodia University of Technology',
     desc: "Studying software engineering fundamentals including algorithms, data structures, web development, software architecture, and database systems. Expected graduation: 2028.",
   },
   {
