@@ -51,12 +51,6 @@ const EDUCATION = [
     desc: "Studying software engineering fundamentals including algorithms, data structures, web development, software architecture, and database systems. Expected graduation: 2028.",
   },
   {
-    date: '2025',
-    title: 'Web Development Internship',
-    institution: 'Company Internship',
-    desc: 'Built a full-stack Vue.js application integrated with Firebase. Gained hands-on experience in agile development, team collaboration, and real-world deployment workflows.',
-  },
-  {
     date: '2022 – 2024',
     title: 'High School Diploma',
     institution: 'High School Cambodia',
