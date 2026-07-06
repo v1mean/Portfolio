@@ -17,7 +17,6 @@ import About from './pages/About';
 import Projects from './pages/Projects';
 import ProjectDetailsPage from './pages/ProjectDetailsPage';
 import Experience from './pages/Experience';
-import Blog from './pages/Blog';
 import Admin from './pages/Admin';
 import NotFound from './pages/NotFound';
 import './index.css';
@@ -66,7 +65,6 @@ function AppContent() {
             <Route path="/projects" element={<Projects />} />
             <Route path="/project/:id" element={<ProjectDetailsPage />} />
             <Route path="/experience" element={<Experience />} />
-            <Route path="/blog" element={<Blog />} />
             <Route path="/admin" element={<Admin />} />
             <Route path="*" element={<NotFound />} />
           </Routes>

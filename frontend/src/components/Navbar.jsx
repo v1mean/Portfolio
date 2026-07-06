@@ -31,7 +31,6 @@ export default function Navbar({ onOpenPalette, onOpenTerminal }) {
           <li><NavLink to="/about" onClick={closeMenu}>About</NavLink></li>
           <li><NavLink to="/projects" onClick={closeMenu}>Projects</NavLink></li>
           <li><NavLink to="/experience" onClick={closeMenu}>Experience</NavLink></li>
-          <li><NavLink to="/blog" onClick={closeMenu}>Blog</NavLink></li>
           <li><a href="/#contact" onClick={closeMenu}>Contact</a></li>
         </ul>
 
