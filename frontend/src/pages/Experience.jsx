@@ -14,10 +14,10 @@ const TIMELINE = [
   {
     year: '2026',
     title: 'First Full-Stack Project',
-    org: 'Self-Directed',
+    org: 'Cambodia University of Technology',
     type: 'project',
     icon: '🚀',
-    desc: 'Built my first complete full-stack web application using Node.js, Express, and MongoDB. This project solidified my understanding of the MERN stack and REST APIs.',
+    desc: 'Built a complete full-stack web application as a university internship project using Node.js, Express, and MongoDB. This project solidified my understanding of the MERN stack and REST APIs.',
     tags: ['Node.js', 'MongoDB', 'Express', 'React'],
     status: 'Milestone',
   },

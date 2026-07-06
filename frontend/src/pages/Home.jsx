@@ -53,8 +53,8 @@ const EDUCATION = [
   {
     date: '2026',
     title: 'First Full-Stack Project',
-    institution: 'Self-Directed',
-    desc: 'Built my first complete full-stack web application using Node.js, Express, and MongoDB. Solidified my understanding of the MERN stack and REST APIs.',
+    institution: 'Cambodia University of Technology',
+    desc: 'Built a complete full-stack web application as a university internship project using Node.js, Express, and MongoDB. Solidified my understanding of the MERN stack and REST APIs.',
   },
   {
     date: '2024',
