@@ -70,12 +70,7 @@ const EDUCATION = [
   },
 ];
 
-const STATS = [
-  { number: '3+', label: 'Years Coding' },
-  { number: '10+', label: 'Projects Built' },
-  { number: '15+', label: 'Technologies' },
-  { number: '100%', label: 'Dedication' },
-];
+
 
 export default function Home() {
   const [featuredProjects, setFeaturedProjects] = useState([]);
@@ -167,21 +162,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ──────────────────── STATS ──────────────────── */}
-      <section style={{ background: 'var(--bg-secondary)', padding: '2rem 0', borderTop: '1px solid var(--border)', borderBottom: '1px solid var(--border)' }}>
-        <div className="container">
-          <div className="stats-row">
-            {STATS.map((s, i) => (
-              <ScrollReveal key={i} variant="scale" delay={i * 80}>
-                <div className="stat-card">
-                  <div className="stat-number">{s.number}</div>
-                  <div className="stat-label">{s.label}</div>
-                </div>
-              </ScrollReveal>
-            ))}
-          </div>
-        </div>
-      </section>
+
 
       {/* ──────────────────── SKILLS ──────────────────── */}
       <section className="section" id="skills">
@@ -197,7 +178,7 @@ export default function Home() {
             {SKILLS.map((cat, i) => (
               <ScrollReveal key={i} variant="up" delay={i * 100}>
                 <div className="skill-category" style={{ height: '100%' }}>
-                  <div className="skill-category-icon">{cat.icon}</div>
+
                   <h3 className="skill-category-title">{cat.title}</h3>
                   <div className="skill-tags">
                     {cat.tags.map((tag, j) => (
