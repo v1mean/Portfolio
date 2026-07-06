@@ -139,7 +139,7 @@
   --transition-slow: 0.4s ease;
 
   --navbar-height: 70px;
-  --container-max: 1200px;
+  --container-max: 1300px;
 }
 
 /* ===========================
@@ -147,7 +147,7 @@
    =========================== */
 html {
   scroll-behavior: smooth;
-  font-size: 16px;
+  font-size: 15px;
 }
 
 body {
