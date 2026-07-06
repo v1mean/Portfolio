@@ -51,6 +51,18 @@ const EDUCATION = [
     desc: "Studying software engineering fundamentals including algorithms, data structures, web development, software architecture, and database systems. Expected graduation: 2028.",
   },
   {
+    date: '2026',
+    title: 'First Full-Stack Project',
+    institution: 'Self-Directed',
+    desc: 'Built my first complete full-stack web application using Node.js, Express, and MongoDB. Solidified my understanding of the MERN stack and REST APIs.',
+  },
+  {
+    date: '2024',
+    title: 'Started Coding Journey',
+    institution: 'Self-Taught',
+    desc: 'Began learning programming with Python and HTML/CSS. Discovered a passion for web development and started building small projects.',
+  },
+  {
     date: '2022 – 2024',
     title: 'High School Diploma',
     institution: 'High School Cambodia',
